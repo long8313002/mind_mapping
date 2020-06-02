@@ -8,7 +8,7 @@ import 'mind_mapping_layout.dart';
 
 class MindMappingPager extends BasePager {
   ILayout layout =
-      MindMappingLayout(leftOffset: 30, topOffset: 0, width: 80, height: 30);
+      MindMappingLayout(leftOffset: 30, topOffset: 15, width: 80, height: 30);
 
   @override
   void dispose() {
@@ -29,25 +29,7 @@ class MindMappingPager extends BasePager {
 
   List<MindMappingInfo> createInfoList() {
     var infoList = <MindMappingInfo>[];
-    infoList.add(MindMappingInfo(content: "11111", children: [
-      MindMappingInfo(content: "22222", children: [
-        MindMappingInfo(content: "1"),
-        MindMappingInfo(content: "2"),
-        MindMappingInfo(content: "3"),
-        MindMappingInfo(content: "4"),
-        MindMappingInfo(content: "5"),
-        MindMappingInfo(content: "6")
-      ]),
-      MindMappingInfo(content: "33333", children: [
-        MindMappingInfo(content: "7777777"),
-        MindMappingInfo(content: "a"),
-        MindMappingInfo(content: "s"),
-        MindMappingInfo(content: "d"),
-        MindMappingInfo(content: "f"),
-        MindMappingInfo(content: "g")
-      ]),
-      MindMappingInfo(content: "44444")
-    ]));
+    infoList.add(MindMappingInfo(content: "思维导图",));
 
     layout.layout(infoList);
 

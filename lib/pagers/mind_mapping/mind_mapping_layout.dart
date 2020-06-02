@@ -109,13 +109,13 @@ class MindMappingLayout implements ILayout {
 
       _changeWidthHeight(item, width, height, LINE_EMS);
 
-      top += item.height+topOffset;
+      top += item.height + topOffset;
 
       layoutWithLeft(item.children, left + item.width + leftOffset, preTop);
 
       if (item.children != null && item.children.length > 0) {
         var childItem = item.children[item.children.length - 1];
-        preTop = childItem.top + topOffset+childItem.height;
+        preTop = childItem.top + topOffset + childItem.height;
       }
     });
   }
@@ -146,7 +146,7 @@ class MindMappingLayout implements ILayout {
     List<MindMappingInfo> childrenInfoList = <MindMappingInfo>[];
 
     infoList.forEach((item) {
-      item.lines = List();
+      item.lines.clear();
 
       Point<double> startPoint =
           Point(item.left + item.width, item.top + item.height);

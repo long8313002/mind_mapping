@@ -30,6 +30,9 @@ class _MindMappingContainerState extends State<MindMappingContainer> {
 
   @override
   Widget build(BuildContext context) {
+
+    var screenSize = MediaQuery.of(context).size;
+
     var measureReact = measureWidthHeightLooper(widget.infoList);
 
     return SingleChildScrollView(
@@ -38,8 +41,8 @@ class _MindMappingContainerState extends State<MindMappingContainer> {
       child: SingleChildScrollView(
         controller: _vController,
         child: Container(
-            width: measureReact.width + WIDTH_OFFSET,
-            height: measureReact.height + HEIGHT_OFFSET,
+            width: max(measureReact.width + WIDTH_OFFSET,screenSize.width),
+            height: max(measureReact.height + HEIGHT_OFFSET,screenSize.height),
             padding:
                 EdgeInsets.only(left: WIDTH_OFFSET / 2, top: HEIGHT_OFFSET / 2),
             child: Stack(
@@ -77,6 +80,12 @@ class _MindMappingContainerState extends State<MindMappingContainer> {
               valueChange: (newValue) {
                 setState(() {
                   item.content = newValue;
+                  widget.layout.layout(widget.infoList);
+                });
+              },
+              addClick: (){
+                setState(() {
+                  item.children.add(MindMappingInfo(content: "新的"));
                   widget.layout.layout(widget.infoList);
                 });
               },
