@@ -5,6 +5,8 @@ import 'mind_mapping_info.dart';
 
 abstract class ILayout {
   void layout(List<MindMappingInfo> infoList);
+
+  int getLines(MindMappingInfo item);
 }
 
 Rect measureWidthHeight(List<MindMappingInfo> infoList) {
@@ -51,6 +53,21 @@ Rect measureWidthHeightLooper(List<MindMappingInfo> infoList) {
   return Rect.fromLTRB(left, top, right, bottom);
 }
 
+void _changeWidthHeight(MindMappingInfo item, final double width,
+    final double height, final int length) {
+  if (item.content.length < length) {
+    item.width = width;
+  } else {
+    item.width = width * 2;
+  }
+
+  if (item.content.length > length * 2) {
+    item.height = height * 2;
+  } else {
+    item.height = height;
+  }
+}
+
 class MindMappingLayout implements ILayout {
   final double leftOffset;
 
@@ -59,6 +76,8 @@ class MindMappingLayout implements ILayout {
   final double width;
 
   final double height;
+
+  static const int LINE_EMS = 8;
 
   MindMappingLayout(
       {this.leftOffset = 0,
@@ -87,16 +106,16 @@ class MindMappingLayout implements ILayout {
     infoList.forEach((item) {
       item.left = left;
       item.top = top;
-      item.width = width;
-      item.height = height;
 
-      top += topOffset;
+      _changeWidthHeight(item, width, height, LINE_EMS);
 
-      layoutWithLeft(item.children, left + leftOffset, preTop);
+      top += item.height+topOffset;
+
+      layoutWithLeft(item.children, left + item.width + leftOffset, preTop);
 
       if (item.children != null && item.children.length > 0) {
         var childItem = item.children[item.children.length - 1];
-        preTop = childItem.top + topOffset;
+        preTop = childItem.top + topOffset+childItem.height;
       }
     });
   }
@@ -124,13 +143,13 @@ class MindMappingLayout implements ILayout {
   }
 
   void layoutLines(List<MindMappingInfo> infoList) {
-
     List<MindMappingInfo> childrenInfoList = <MindMappingInfo>[];
 
     infoList.forEach((item) {
-      item.lines = item.lines == null ? List() : item.lines;
+      item.lines = List();
 
-      Point<double> startPoint = Point(item.left + item.width, item.top + item.height);
+      Point<double> startPoint =
+          Point(item.left + item.width, item.top + item.height);
 
       if (item.children == null || item.children.isEmpty) {
         return;
@@ -146,8 +165,13 @@ class MindMappingLayout implements ILayout {
       });
     });
 
-    if(childrenInfoList.isNotEmpty){
+    if (childrenInfoList.isNotEmpty) {
       layoutLines(childrenInfoList);
     }
+  }
+
+  @override
+  int getLines(MindMappingInfo item) {
+    return item.content.length > LINE_EMS * 2 ? 2 : 1;
   }
 }

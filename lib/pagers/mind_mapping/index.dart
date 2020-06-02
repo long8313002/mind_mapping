@@ -7,6 +7,9 @@ import 'mind_mapping_info.dart';
 import 'mind_mapping_layout.dart';
 
 class MindMappingPager extends BasePager {
+  ILayout layout =
+      MindMappingLayout(leftOffset: 30, topOffset: 0, width: 80, height: 30);
+
   @override
   void dispose() {
     super.dispose();
@@ -15,7 +18,7 @@ class MindMappingPager extends BasePager {
   @override
   Widget createContent(BuildContext context) {
     return Scaffold(
-      body: MindMappingContainer(createInfoList()),
+      body: MindMappingContainer(createInfoList(), layout),
     );
   }
 
@@ -23,7 +26,6 @@ class MindMappingPager extends BasePager {
   String title() {
     return "思维导图";
   }
-
 
   List<MindMappingInfo> createInfoList() {
     var infoList = <MindMappingInfo>[];
@@ -47,10 +49,8 @@ class MindMappingPager extends BasePager {
       MindMappingInfo(content: "44444")
     ]));
 
-    MindMappingLayout(leftOffset: 100, topOffset: 40, width: 80, height: 30)
-        .layout(infoList);
+    layout.layout(infoList);
 
     return infoList;
   }
-
 }

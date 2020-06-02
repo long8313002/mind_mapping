@@ -1,7 +1,9 @@
 import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:mindmapping/pagers/mind_mapping/mind_mapping_info.dart';
+import 'package:mindmapping/pagers/mind_mapping/mind_mapping_line.dart';
 
 import 'mind_mapping_item.dart';
 import 'mind_mapping_layout.dart';
@@ -9,7 +11,9 @@ import 'mind_mapping_layout.dart';
 class MindMappingContainer extends StatefulWidget {
   final List<MindMappingInfo> infoList;
 
-  MindMappingContainer(this.infoList);
+  final ILayout layout;
+
+  MindMappingContainer(this.infoList,this.layout);
 
   @override
   State<StatefulWidget> createState() {
@@ -36,7 +40,8 @@ class _MindMappingContainerState extends State<MindMappingContainer> {
         child: Container(
             width: measureReact.width + WIDTH_OFFSET,
             height: measureReact.height + HEIGHT_OFFSET,
-            padding: EdgeInsets.only(left: WIDTH_OFFSET/2,top: HEIGHT_OFFSET/2),
+            padding:
+                EdgeInsets.only(left: WIDTH_OFFSET / 2, top: HEIGHT_OFFSET / 2),
             child: Stack(
               children: createChildren(),
             )),
@@ -65,15 +70,24 @@ class _MindMappingContainerState extends State<MindMappingContainer> {
         child: Container(
             width: item.width,
             height: item.height,
+            color: Colors.transparent,
             child: MindMappingItem(
               info: item.content,
+              lines: widget.layout.getLines(item),
               valueChange: (newValue) {
                 setState(() {
                   item.content = newValue;
+                  widget.layout.layout(widget.infoList);
                 });
               },
             )),
       ));
+
+      if (item.lines != null && item.lines.isNotEmpty) {
+        item.lines.forEach((line) {
+          childViews.add(MindMappingLine(line: line,));
+        });
+      }
 
       addChildToList(childViews, item.children);
     });
