@@ -11,9 +11,11 @@ import 'mind_mapping_layout.dart';
 class MindMappingContainer extends StatefulWidget {
   final List<MindMappingInfo> infoList;
 
-  final ILayout layout;
+  final ILayout layout = MindMappingLayout(leftOffset: 30, topOffset: 15, width: 100, height: 30);
 
-  MindMappingContainer(this.infoList,this.layout);
+  MindMappingContainer(this.infoList){
+     layout.layout(infoList);
+  }
 
   @override
   State<StatefulWidget> createState() {
