@@ -31,15 +31,19 @@ class _MindMappingItemState extends State<MindMappingItem> {
     });
     return Stack(
       children: <Widget>[
-        TextField(
-          maxLines: widget.lines,
-          controller: controller,
+        Container(
+          padding: EdgeInsets.only(right: 30),
+          child: TextField(
+            textAlign: TextAlign.center,
+            maxLines: widget.lines,
+            controller: controller,
+          ),
         ),
         Positioned(
           right: -10,
-          top: 0,
+          bottom: -15,
           child: IconButton(
-            icon: Icon(Icons.thumb_up),
+            icon: Icon(Icons.add),
             onPressed: () {
               if(widget.addClick!=null){
                 widget.addClick();

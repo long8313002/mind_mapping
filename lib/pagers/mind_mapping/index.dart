@@ -8,7 +8,7 @@ import 'mind_mapping_layout.dart';
 
 class MindMappingPager extends BasePager {
   ILayout layout =
-      MindMappingLayout(leftOffset: 30, topOffset: 15, width: 80, height: 30);
+      MindMappingLayout(leftOffset: 30, topOffset: 15, width: 100, height: 30);
 
   @override
   void dispose() {

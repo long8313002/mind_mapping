@@ -77,7 +77,7 @@ class MindMappingLayout implements ILayout {
 
   final double height;
 
-  static const int LINE_EMS = 8;
+  static const int LINE_EMS = 4;
 
   MindMappingLayout(
       {this.leftOffset = 0,
